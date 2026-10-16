@@ -1,0 +1,151 @@
+@import "@fontsource/roboto/latin-400.css";
+@import "@fontsource/roboto/latin-500.css";
+@import "tailwindcss";
+
+/*
+ * Look of Google Finance between 2020 and 2025 (Material): white surfaces,
+ * hairline grey borders, blue accent, green/red change pills. Colours are
+ * CSS variables so the dark theme only redefines them.
+ */
+:root {
+    --fond: #ffffff;
+    --surface: #ffffff;
+    --surface-2: #f1f3f4;
+    --texte: #202124;
+    --muet: #5f6368;
+    --bordure: #dadce0;
+    --filet: #e8eaed;
+    --accent: #1a73e8;
+    --accent-fond: #e8f0fe;
+    --accent-texte: #1967d2;
+    --hausse: #137333;
+    --hausse-fond: #e6f4ea;
+    --hausse-ligne: #1e8e3e;
+    --baisse: #a50e0e;
+    --baisse-fond: #fce8e6;
+    --baisse-ligne: #d93025;
+    --neutre-ligne: #5f6368;
+    --alerte: #b06000;
+    --alerte-fond: #fef7e0;
+    --ombre: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 2px 6px 2px rgb(60 64 67 / 15%);
+    color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --fond: #202124;
+        --surface: #202124;
+        --surface-2: #303134;
+        --texte: #e8eaed;
+        --muet: #9aa0a6;
+        --bordure: #5f6368;
+        --filet: #3c4043;
+        --accent: #8ab4f8;
+        --accent-fond: #394457;
+        --accent-texte: #d2e3fc;
+        --hausse: #81c995;
+        --hausse-fond: rgb(129 201 149 / 16%);
+        --hausse-ligne: #81c995;
+        --baisse: #f28b82;
+        --baisse-fond: rgb(242 139 130 / 16%);
+        --baisse-ligne: #f28b82;
+        --neutre-ligne: #9aa0a6;
+        --alerte: #fdd663;
+        --alerte-fond: rgb(253 214 99 / 12%);
+        --ombre: 0 1px 3px 0 rgb(0 0 0 / 50%), 0 4px 8px 3px rgb(0 0 0 / 25%);
+        color-scheme: dark;
+    }
+}
+
+@theme inline {
+    --font-sans: Roboto, Arial, sans-serif;
+    --color-fond: var(--fond);
+    --color-surface: var(--surface);
+    --color-surface-2: var(--surface-2);
+    --color-texte: var(--texte);
+    --color-muet: var(--muet);
+    --color-bordure: var(--bordure);
+    --color-filet: var(--filet);
+    --color-accent: var(--accent);
+    --color-accent-fond: var(--accent-fond);
+    --color-accent-texte: var(--accent-texte);
+    --color-hausse: var(--hausse);
+    --color-hausse-fond: var(--hausse-fond);
+    --color-baisse: var(--baisse);
+    --color-baisse-fond: var(--baisse-fond);
+    --color-alerte: var(--alerte);
+    --color-alerte-fond: var(--alerte-fond);
+    --shadow-carte: var(--ombre);
+}
+
+html {
+    font-size: 14px;
+}
+
+body {
+    @apply bg-fond font-sans text-texte antialiased;
+}
+
+@layer base {
+    a {
+        @apply text-accent no-underline;
+    }
+}
+
+@layer components {
+    .carte {
+        @apply rounded-lg border border-bordure bg-surface;
+    }
+    .titre-carte {
+        @apply px-4 pt-4 pb-2 text-[18px] leading-6;
+    }
+    .tableau {
+        @apply w-full border-collapse;
+    }
+    .tableau th {
+        @apply border-b border-filet px-4 py-2.5 text-right text-xs font-medium whitespace-nowrap text-muet;
+    }
+    .tableau td {
+        @apply border-b border-filet px-4 py-3 text-right whitespace-nowrap tabular-nums;
+    }
+    .tableau tbody tr:last-child td {
+        @apply border-b-0;
+    }
+    .tableau th:first-child,
+    .tableau td:first-child {
+        @apply text-left;
+    }
+    .tableau tbody tr:hover {
+        @apply bg-surface-2/50;
+    }
+    .tableau tfoot td {
+        @apply border-t border-b-0 border-bordure font-medium;
+    }
+    .tableau-serre th,
+    .tableau-serre td {
+        @apply px-3;
+    }
+    .tableau-serre th:first-child,
+    .tableau-serre td:first-child {
+        @apply pl-4;
+    }
+    /* Filter chip, like the "Compare markets" region selector. */
+    .puce {
+        @apply inline-flex h-8 cursor-pointer items-center gap-1.5 rounded-full border border-bordure bg-surface px-3 text-[13px] font-medium whitespace-nowrap text-muet hover:bg-surface-2;
+    }
+    .puce-active {
+        @apply border-transparent bg-accent-fond text-accent-texte hover:bg-accent-fond;
+    }
+    .bouton {
+        @apply inline-flex h-9 cursor-pointer items-center gap-2 rounded-full border border-bordure bg-surface px-4 text-[13px] font-medium text-accent hover:bg-accent-fond/60 disabled:cursor-default disabled:opacity-50;
+    }
+    .bouton-plein {
+        @apply inline-flex h-9 cursor-pointer items-center gap-2 rounded-full bg-accent px-5 text-[13px] font-medium text-fond hover:shadow-carte disabled:opacity-50;
+    }
+    .champ {
+        @apply h-9 rounded border border-bordure bg-surface px-3 text-texte focus:border-accent focus:outline-none;
+    }
+    .etiquette {
+        @apply text-xs font-medium tracking-wide text-muet uppercase;
+    }
+}

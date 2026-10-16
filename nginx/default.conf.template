@@ -1,0 +1,36 @@
+# Rendered by the nginx image at startup (envsubst on API_*).
+# The bourse API is reachable on the local network or through the VPN:
+# nginx tries the LAN address first and switches to the VPN one when it does
+# not answer within 1 s, then retries the LAN address every 2 minutes. The
+# zone shares that state between workers, so only one request pays the delay.
+upstream api_bourse {
+    zone api_bourse 64k;
+    server ${API_LAN} max_fails=1 fail_timeout=120s;
+    server ${API_VPN} backup;
+}
+
+server {
+    listen 80;
+    server_name _;
+    root /usr/share/nginx/html;
+
+    # The key is added here and never sent to the browser.
+    location /api/ {
+        proxy_pass http://api_bourse/;
+        proxy_set_header X-API-Key "${API_KEY}";
+        proxy_set_header Authorization "";
+        proxy_connect_timeout 1s;
+        proxy_read_timeout 120s;
+        proxy_next_upstream error timeout;
+    }
+
+    location /assets/ {
+        add_header Cache-Control "public, max-age=31536000, immutable";
+        try_files $uri =404;
+    }
+
+    location / {
+        add_header Cache-Control "no-cache";
+        try_files $uri /index.html;
+    }
+}
