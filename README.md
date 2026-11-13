@@ -15,9 +15,9 @@ L'API est joignable à deux adresses, par le VPN (Tailscale) et sur le réseau l
 
 Le site lui-même n'a pas d'authentification : toute personne qui l'atteint voit le portefeuille et peut utiliser les deux actions d'écriture (suivre un instrument, relancer la synchro du Sheet). Il est fait pour rester sur le réseau local ou le VPN, jamais exposé sur Internet.
 
-## API bourse (dossier `pi-bourse/`)
+## API bourse (dossier `backend/`)
 
-Le dossier [`pi-bourse/`](pi-bourse/) contient l'API qui alimente ce site : Node.js, Express, PostgreSQL, cours récupérés sur Yahoo Finance et synchronisation des opérations depuis un Google Sheet. Elle tourne dans un conteneur sur la Raspberry. Son README explique la configuration, les routes et les tâches planifiées. Ce site et l'API restent deux projets indépendants, avec chacun son `docker-compose.yml`.
+Le dossier [`backend/`](backend/) contient l'API qui alimente ce site : Node.js, Express, PostgreSQL, cours récupérés sur Yahoo Finance et synchronisation des opérations depuis un Google Sheet. Elle tourne dans un conteneur sur la Raspberry. Son README explique la configuration, les routes et les tâches planifiées. Ce site et l'API restent deux projets indépendants, avec chacun son `docker-compose.yml`.
 
 ## Configuration
 
